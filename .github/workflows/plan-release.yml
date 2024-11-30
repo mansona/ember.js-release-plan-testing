@@ -32,7 +32,7 @@ jobs:
   prepare-release-notes:
     name: Prepare Release Notes
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10 # this is only to deal with the install script of puppeteer. We could alternatively just do `--ignore-scripts`
     needs: check-plan
     permissions:
       contents: write
