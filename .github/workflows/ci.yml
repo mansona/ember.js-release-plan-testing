@@ -221,62 +221,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
-  publish:
-    name: Publish channel to s3
-    runs-on: ubuntu-latest
-    needs:
-      [
-        basic-test,
-        lint,
-        variant-tests,
-        browserstack-test,
-        node-test,
-        blueprint-test,
-        browser-test,
-      ]
-    # Only run on pushes to branches that are not from the cron workflow
-    if: github.event_name == 'push' && contains(github.ref, 'cron') != true
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - name: build for publish
-        run: node bin/build-for-publishing.js
-      - name: publish to s3
-        run: node bin/publish-to-s3.mjs
-        env:
-          S3_BUCKET_NAME: 'builds.emberjs.com'
-          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY}}
-          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID}}
-
-  publish-alpha:
-    name: Publish alpha from default branch
-    runs-on: ubuntu-latest
-    needs:
-      [
-        basic-test,
-        lint,
-        variant-tests,
-        browserstack-test,
-        node-test,
-        blueprint-test,
-        browser-test,
-      ]
-    # Only run on pushes to main
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - name: build for publish
-        run: node bin/build-for-publishing.js
-      - name: publish to s3
-        run: node bin/publish-to-s3.mjs
-        env:
-          BUILD_TYPE: alpha
-          OVERRIDE_FEATURES: ''
-          S3_BUCKET_NAME: 'builds.emberjs.com'
-          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY}}
-          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID}}
-
   notify:
     name: Notify Discord
     runs-on: ubuntu-latest
