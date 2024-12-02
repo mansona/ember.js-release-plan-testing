@@ -1,0 +1,12 @@
+# Unlabeled Changes
+
+* `@ember/-internals`
+  * .DS_Store files in code tree ([@stefri](https://github.com/stefri))
+* Other
+  * [#5](https://github.com/emberjs/ember.js/pull/5) SproutCore 2 doesn't have themes; update comments in SC.View#init() to reflect this. ([@erichocean](https://github.com/erichocean))
+  * [#3](https://github.com/emberjs/ember.js/pull/3) Fix issue #2 - SC.Buttons inside of form tags trigger form submission ([@ebryn](https://github.com/ebryn))
+  * SC.Buttons inside of form tags trigger form submission ([@ebryn](https://github.com/ebryn))
+  * Safari 5.0.5 throws TypeError ([@criscokid](https://github.com/criscokid))
+
+
+*Cannot plan release until the above changes are labeled*.
